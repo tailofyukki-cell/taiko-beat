@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Taiko Beat - オリジナル太鼓系リズムゲーム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== DESIGN: Dark Arcade Retro-Futurism =====
+       - Deep space black bg + neon red/blue notes
+       - Orbitron display font + Share Tech Mono for scores
+       - Glowing effects on notes and hit zone
+    */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050810;
+      --bg2: #0a0f1e;
+      --don: #ff3a3a;
+      --don-glow: rgba(255,58,58,0.6);
+      --ka: #3a9fff;
+      --ka-glow: rgba(58,159,255,0.6);
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --text: #e8eaf6;
+      --muted: #6b7280;
+      --lane-bg: rgba(255,255,255,0.04);
+      --lane-border: rgba(255,255,255,0.12);
+      --hit-x: 180px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen { display: none; width: 100%; max-width: 900px; padding: 16px; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+    /* ===== TITLE SCREEN ===== */
+    #title-screen {
+      gap: 32px;
+      text-align: center;
+    }
+    .game-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.4rem, 8vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, var(--don) 0%, #ff8c00 40%, var(--ka) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px rgba(255,100,50,0.5));
+    }
+    .game-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .song-card {
+      background: var(--bg2);
+      border: 1px solid var(--lane-border);
+      border-radius: 12px;
+      padding: 20px 28px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .song-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .song-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .diff-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .diff-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .diff-btn:hover { background: rgba(255,255,255,0.1); }
+    .diff-btn.selected { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.1); }
+    .diff-btn[data-diff="easy"] { --c: #4ade80; }
+    .diff-btn[data-diff="normal"] { --c: #60a5fa; }
+    .diff-btn[data-diff="hard"] { --c: #f87171; }
+    .diff-btn.selected[data-diff="easy"] { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.1); }
+    .diff-btn.selected[data-diff="normal"] { border-color: #60a5fa; color: #60a5fa; background: rgba(96,165,250,0.1); }
+    .diff-btn.selected[data-diff="hard"] { border-color: #f87171; color: #f87171; background: rgba(248,113,113,0.1); }
+
+    .start-btn {
+      padding: 16px 48px;
+      background: linear-gradient(135deg, var(--don), #ff6600);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 30px rgba(255,58,58,0.4);
+    }
+    .start-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(255,58,58,0.6);
+    }
+    .key-guide {
+      display: flex;
+      gap: 24px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .key-guide span { display: flex; align-items: center; gap: 6px; }
+    .key-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      border: 1px solid currentColor;
+      border-radius: 6px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+    .don-color { color: var(--don); }
+    .ka-color { color: var(--ka); }
+
+    /* ===== PLAY SCREEN ===== */
+    #play-screen { gap: 0; padding: 0; }
+
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 8px 16px;
+      background: rgba(5,8,16,0.9);
+      border-bottom: 1px solid var(--lane-border);
+    }
+    .hud-score {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+    .hud-combo {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+    }
+    .hud-combo .combo-num {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      color: var(--gold);
+      display: block;
+      text-shadow: 0 0 15px rgba(255,215,0,0.6);
+    }
+    .hud-info {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--don), var(--ka));
+      transition: width 0.1s linear;
+      width: 0%;
+    }
+
+    #game-canvas {
+      display: block;
+      width: 100%;
+      touch-action: none;
+    }
+
+    .touch-buttons {
+      display: flex;
+      width: 100%;
+      gap: 0;
+    }
+    .touch-btn {
+      flex: 1;
+      padding: 20px 0;
+      border: none;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.08s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .touch-btn-ka-l {
+      background: rgba(58,159,255,0.2);
+      color: var(--ka);
+      border-right: 1px solid rgba(58,159,255,0.3);
+    }
+    .touch-btn-don-l {
+      background: rgba(255,58,58,0.2);
+      color: var(--don);
+      border-right: 1px solid rgba(255,58,58,0.3);
+    }
+    .touch-btn-don-r {
+      background: rgba(255,58,58,0.2);
+      color: var(--don);
+      border-left: 1px solid rgba(255,58,58,0.3);
+    }
+    .touch-btn-ka-r {
+      background: rgba(58,159,255,0.2);
+      color: var(--ka);
+      border-left: 1px solid rgba(58,159,255,0.3);
+    }
+    .touch-btn:active { filter: brightness(1.8); }
+
+    .pause-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,8,16,0.85);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .pause-overlay.visible { display: flex; }
+    .pause-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .pause-btn {
+      padding: 12px 32px;
+      border: 2px solid var(--text);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pause-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* ===== RESULT SCREEN ===== */
+    #result-screen { gap: 20px; text-align: center; }
+    .result-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 900;
+    }
+    .result-title.clear { color: var(--gold); text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+    .result-title.failed { color: var(--muted); }
+    .result-rank {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(3rem, 12vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .result-score {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      color: var(--gold);
+      text-shadow: 0 0 15px rgba(255,215,0,0.4);
+    }
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .stat-box {
+      background: var(--bg2);
+      border: 1px solid var(--lane-border);
+      border-radius: 10px;
+      padding: 12px 8px;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.4rem;
+    }
+    .stat-value.perfect { color: var(--gold); }
+    .stat-value.good { color: #4ade80; }
+    .stat-value.miss { color: var(--don); }
+    .stat-value.combo { color: var(--ka); }
+    .result-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .result-btn {
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .result-btn-retry {
+      background: linear-gradient(135deg, var(--don), #ff6600);
+      border: none;
+      color: white;
+      box-shadow: 0 0 20px rgba(255,58,58,0.3);
+    }
+    .result-btn-retry:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,58,58,0.5); }
+    .result-btn-title {
+      background: transparent;
+      border: 2px solid var(--muted);
+      color: var(--muted);
+    }
+    .result-btn-title:hover { border-color: var(--text); color: var(--text); }
+
+    /* ===== LOADING ===== */
+    #loading-screen {
+      gap: 16px;
+      text-align: center;
+    }
+    .loading-text {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+    }
+    .loading-spinner {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: var(--don);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      :root { --hit-x: 120px; }
+      .key-guide { gap: 12px; font-size: 0.7rem; }
+      .touch-btn { padding: 16px 0; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen" class="screen active">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">LOADING...</div>
+</div>
+
+<!-- Title Screen -->
+<div id="title-screen" class="screen">
+  <div>
+    <div class="game-logo">TAIKO BEAT</div>
+    <div class="game-subtitle">Original Rhythm Game</div>
+  </div>
+
+  <div class="song-card">
+    <div class="song-title" id="title-song-name">NEON PULSE</div>
+    <div class="song-meta" id="title-song-meta">BPM 140 &nbsp;|&nbsp; Original</div>
+    <div class="diff-buttons">
+      <button class="diff-btn" data-diff="easy">EASY</button>
+      <button class="diff-btn selected" data-diff="normal">NORMAL</button>
+      <button class="diff-btn" data-diff="hard">HARD</button>
+    </div>
+  </div>
+
+  <button class="start-btn" id="start-btn">▶ START</button>
+
+  <div class="key-guide">
+    <span class="don-color">
+      <span class="key-badge">F</span>/<span class="key-badge">J</span>
+      ドン（中心）
+    </span>
+    <span class="ka-color">
+      <span class="key-badge">D</span>/<span class="key-badge">K</span>
+      カッ（ふち）
+    </span>
+  </div>
+  <div style="font-size:0.75rem; color: var(--muted);">Esc: ポーズ &nbsp;|&nbsp; Enter: スタート/リトライ</div>
+</div>
+
+<!-- Play Screen -->
+<div id="play-screen" class="screen">
+  <div class="hud">
+    <div>
+      <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.1em;">SCORE</div>
+      <div class="hud-score" id="hud-score">0</div>
+    </div>
+    <div class="hud-combo">
+      <span class="combo-num" id="hud-combo">0</span>
+      <span style="font-size:0.65rem; color:var(--muted); letter-spacing:0.1em;">COMBO</span>
+    </div>
+    <div class="hud-info">
+      <div id="hud-diff">NORMAL</div>
+      <div id="hud-progress">0%</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <canvas id="game-canvas"></canvas>
+  <div class="touch-buttons">
+    <button class="touch-btn touch-btn-ka-l" id="btn-ka-l">◀ カッ</button>
+    <button class="touch-btn touch-btn-don-l" id="btn-don-l">ドン ▶</button>
+    <button class="touch-btn touch-btn-don-r" id="btn-don-r">◀ ドン</button>
+    <button class="touch-btn touch-btn-ka-r" id="btn-ka-r">カッ ▶</button>
+  </div>
+</div>
+
+<!-- Result Screen -->
+<div id="result-screen" class="screen">
+  <div class="result-title" id="result-title">CLEAR!</div>
+  <div class="result-rank" id="result-rank">S</div>
+  <div class="result-score" id="result-score">1,234,567</div>
+  <div class="result-stats">
+    <div class="stat-box">
+      <div class="stat-label">Perfect</div>
+      <div class="stat-value perfect" id="result-perfect">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Good</div>
+      <div class="stat-value good" id="result-good">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Miss</div>
+      <div class="stat-value miss" id="result-miss">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Max Combo</div>
+      <div class="stat-value combo" id="result-combo">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Accuracy</div>
+      <div class="stat-value" id="result-acc">0%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Difficulty</div>
+      <div class="stat-value" id="result-diff">NORMAL</div>
+    </div>
+  </div>
+  <div class="result-buttons">
+    <button class="result-btn result-btn-retry" id="retry-btn">↺ RETRY</button>
+    <button class="result-btn result-btn-title" id="title-btn">⌂ TITLE</button>
+  </div>
+</div>
+
+<!-- Pause Overlay -->
+<div class="pause-overlay" id="pause-overlay">
+  <div class="pause-title">PAUSED</div>
+  <button class="pause-btn" id="resume-btn">▶ RESUME</button>
+  <button class="pause-btn" id="pause-title-btn">⌂ TITLE</button>
+</div>
+
+<script>
+// ============================================================
+// TAIKO BEAT - Pure Vanilla JS Implementation
+// Design: Dark Arcade Retro-Futurism
+// Audio: WebAudio API (procedural synthesis)
+// Sync: AudioContext.currentTime
+// ============================================================
+
+'use strict';
+
+// ---- Constants ----
+const JUDGMENT = {
+  PERFECT: { ms: 50, score: 1000, label: 'PERFECT!', color: '#ffd700' },
+  GOOD:    { ms: 108, score: 500, label: 'GOOD',    color: '#4ade80' },
+  MISS:    { ms: 200, label: 'MISS',    color: '#6b7280' },
+};
+const HIT_X_RATIO = 0.22; // 判定円のX位置（画面幅比）
+const LANE_Y_RATIO = 0.45; // レーンのY位置（画面高比）
+const NOTE_RADIUS = 28;
+const HIT_ZONE_RADIUS = 36;
+const SCROLL_SPEED_BASE = 500; // px/sec at 1.0x
+const CANVAS_HEIGHT = 220;
+
+// ---- State ----
+let audioCtx = null;
+let gameState = 'title'; // title | playing | paused | result
+let currentSong = null;
+let currentDiff = 'normal';
+let chart = null;
+let notes = [];
+let score = 0;
+let combo = 0;
+let maxCombo = 0;
+let countPerfect = 0;
+let countGood = 0;
+let countMiss = 0;
+let songStartTime = 0; // audioCtx time when song started
+let songDuration = 0;
+let gameTime = 0; // current game time in seconds
+let rafId = null;
+let lastRafTime = 0;
+let judgeEffects = []; // {x, y, label, color, alpha, t}
+let hitFlash = { don: 0, ka: 0 }; // flash alpha for hit zone
+let notePool = [];
+let bgmBuffer = null;
+let bgmSource = null;
+let donBuffer = null;
+let kaBuffer = null;
+let pauseStartTime = 0;
+let totalPausedTime = 0;
+
+// ---- DOM ----
+const screens = {
+  loading: document.getElementById('loading-screen'),
+  title: document.getElementById('title-screen'),
+  play: document.getElementById('play-screen'),
+  result: document.getElementById('result-screen'),
+};
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+const hudScore = document.getElementById('hud-score');
+const hudCombo = document.getElementById('hud-combo');
+const hudDiff = document.getElementById('hud-diff');
+const hudProgress = document.getElementById('hud-progress');
+const progressBar = document.getElementById('progress-bar');
+const pauseOverlay = document.getElementById('pause-overlay');
+
+// ---- Screen Management ----
+function showScreen(name) {
+  Object.entries(screens).forEach(([k, el]) => {
+    el.classList.toggle('active', k === name);
+  });
+}
+
+// ---- Audio Synthesis ----
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function makeDonBuffer() {
+  const sr = audioCtx.sampleRate;
+  const dur = 0.18;
+  const buf = audioCtx.createBuffer(1, sr * dur, sr);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) {
+    const t = i / sr;
+    const env = Math.exp(-t * 28);
+    // 低めの太鼓音 + 倍音
+    d[i] = env * (
+      0.7 * Math.sin(2 * Math.PI * 180 * t) +
+      0.3 * Math.sin(2 * Math.PI * 360 * t) +
+      0.15 * Math.sin(2 * Math.PI * 90 * t)
+    );
+  }
+  return buf;
+}
+
+function makeKaBuffer() {
+  const sr = audioCtx.sampleRate;
+  const dur = 0.14;
+  const buf = audioCtx.createBuffer(1, sr * dur, sr);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) {
+    const t = i / sr;
+    const env = Math.exp(-t * 40);
+    // 高めのリム音
+    d[i] = env * (
+      0.5 * Math.sin(2 * Math.PI * 900 * t) +
+      0.3 * Math.sin(2 * Math.PI * 1400 * t) +
+      0.2 * (Math.random() * 2 - 1)
+    );
+  }
+  return buf;
+}
+
+function makeBGMBuffer(bpm) {
+  // 16小節のループBGMを生成
+  const sr = audioCtx.sampleRate;
+  const beatDur = 60 / bpm;
+  const bars = 16;
+  const totalDur = beatDur * 4 * bars;
+  const buf = audioCtx.createBuffer(2, Math.ceil(sr * totalDur), sr);
+  const L = buf.getChannelData(0);
+  const R = buf.getChannelData(1);
+
+  // キックドラム
+  function kick(t0, vol = 1.0) {
+    const dur = 0.25;
+    for (let i = 0; i < Math.min(sr * dur, L.length - Math.floor(t0 * sr)); i++) {
+      const t = i / sr;
+      const env = Math.exp(-t * 18) * vol;
+      const freq = 80 * Math.exp(-t * 30);
+      const s = env * Math.sin(2 * Math.PI * freq * t);
+      const idx = Math.floor(t0 * sr) + i;
+      if (idx < L.length) { L[idx] += s; R[idx] += s; }
+    }
+  }
+
+  // ハイハット
+  function hihat(t0, vol = 0.35) {
+    const dur = 0.06;
+    for (let i = 0; i < Math.min(sr * dur, L.length - Math.floor(t0 * sr)); i++) {
+      const t = i / sr;
+      const env = Math.exp(-t * 80) * vol;
+      const s = env * (Math.random() * 2 - 1);
+      const idx = Math.floor(t0 * sr) + i;
+      if (idx < L.length) { L[idx] += s; R[idx] += s; }
+    }
+  }
+
+  // スネア
+  function snare(t0, vol = 0.6) {
+    const dur = 0.15;
+    for (let i = 0; i < Math.min(sr * dur, L.length - Math.floor(t0 * sr)); i++) {
+      const t = i / sr;
+      const env = Math.exp(-t * 30) * vol;
+      const s = env * (0.5 * Math.sin(2 * Math.PI * 220 * t) + 0.5 * (Math.random() * 2 - 1));
+      const idx = Math.floor(t0 * sr) + i;
+      if (idx < L.length) { L[idx] += s; R[idx] += s; }
+    }
+  }
+
+  // ベースライン
+  function bass(t0, freq, dur, vol = 0.4) {
+    for (let i = 0; i < Math.min(sr * dur, L.length - Math.floor(t0 * sr)); i++) {
+      const t = i / sr;
+      const env = Math.exp(-t * 4) * vol;
+      const s = env * (Math.sin(2 * Math.PI * freq * t) + 0.3 * Math.sin(2 * Math.PI * freq * 2 * t));
+      const idx = Math.floor(t0 * sr) + i;
+      if (idx < L.length) { L[idx] += s; R[idx] += s; }
+    }
+  }
+
+  // メロディ
+  function melody(t0, freq, dur, vol = 0.25) {
+    for (let i = 0; i < Math.min(sr * dur, L.length - Math.floor(t0 * sr)); i++) {
+      const t = i / sr;
+      const env = Math.min(t / 0.01, 1) * Math.exp(-t * 3) * vol;
+      const s = env * (
+        0.5 * Math.sin(2 * Math.PI * freq * t) +
+        0.3 * Math.sin(2 * Math.PI * freq * 2 * t) +
+        0.1 * Math.sin(2 * Math.PI * freq * 3 * t)
+      );
+      const idx = Math.floor(t0 * sr) + i;
+      if (idx < L.length) { L[idx] += s * 0.7; R[idx] += s * 1.3; }
+    }
+  }
+
+  const b = beatDur;
+  const notes_melody = [
+    // Aメロ（0-7小節）
+    [0,440],[b*0.5,523],[b,587],[b*1.5,659],[b*2,698],[b*2.5,659],[b*3,587],[b*3.5,523],
+    [b*4,440],[b*4.5,392],[b*5,440],[b*5.5,523],[b*6,587],[b*6.5,523],[b*7,440],[b*7.5,392],
+    // Bメロ（8-15小節）
+    [b*8,587],[b*8.5,659],[b*9,698],[b*9.5,784],[b*10,880],[b*10.5,784],[b*11,698],[b*11.5,659],
+    [b*12,587],[b*12.5,523],[b*13,440],[b*13.5,392],[b*14,440],[b*14.5,523],[b*15,587],[b*15.5,523],
+  ];
+
+  const bass_notes = [
+    [0,110],[b*2,98],[b*4,110],[b*6,123],
+    [b*8,131],[b*10,147],[b*12,110],[b*14,98],
+  ];
+
+  for (let bar = 0; bar < bars; bar++) {
+    const t0 = bar * b * 4;
+    // キック: 1,3拍
+    kick(t0);
+    kick(t0 + b * 2);
+    // スネア: 2,4拍
+    snare(t0 + b);
+    snare(t0 + b * 3);
+    // ハイハット: 8分音符
+    for (let i = 0; i < 8; i++) hihat(t0 + i * b * 0.5);
+  }
+
+  notes_melody.forEach(([t, f]) => melody(t, f, b * 0.45));
+  bass_notes.forEach(([t, f]) => bass(t, f, b * 1.8));
+
+  // 正規化
+  let maxVal = 0;
+  for (let i = 0; i < L.length; i++) maxVal = Math.max(maxVal, Math.abs(L[i]), Math.abs(R[i]));
+  if (maxVal > 0.9) {
+    const norm = 0.85 / maxVal;
+    for (let i = 0; i < L.length; i++) { L[i] *= norm; R[i] *= norm; }
+  }
+
+  return buf;
+}
+
+function playBuffer(buffer, loop = false, when = 0) {
+  const src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  src.loop = loop;
+  const gain = audioCtx.createGain();
+  gain.gain.value = loop ? 0.7 : 1.0;
+  src.connect(gain);
+  gain.connect(audioCtx.destination);
+  src.start(when);
+  return src;
+}
+
+function playSE(buffer) {
+  if (!buffer || !audioCtx) return;
+  const src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  const gain = audioCtx.createGain();
+  gain.gain.value = 0.8;
+  src.connect(gain);
+  gain.connect(audioCtx.destination);
+  src.start();
+}
+
+// ---- Chart Loading ----
+async function loadChart(songId, diff) {
+  const url = `data/charts/${songId}_${diff}.json`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to load chart: ${url}`);
+  return res.json();
+}
+
+async function loadSongs() {
+  const res = await fetch('data/songs.json');
+  if (!res.ok) throw new Error('Failed to load songs.json');
+  return res.json();
+}
+
+// ---- Note Preparation ----
+function prepareNotes(chartData) {
+  return chartData.notes.map((n, i) => ({
+    id: i,
+    time: n.time,   // seconds
+    type: n.type,   // 'don' | 'ka'
+    judged: false,
+    x: 0,           // calculated during render
+  }));
+}
+
+// ---- Canvas Resize ----
+function resizeCanvas() {
+  const w = canvas.parentElement.clientWidth || window.innerWidth;
+  canvas.width = w;
+  canvas.height = CANVAS_HEIGHT;
+  canvas.style.height = CANVAS_HEIGHT + 'px';
+}
+
+// ---- Drawing ----
+function getHitX() {
+  return canvas.width * HIT_X_RATIO;
+}
+
+function getLaneY() {
+  return canvas.height * LANE_Y_RATIO;
+}
+
+function drawFrame(dt) {
+  const w = canvas.width;
+  const h = canvas.height;
+  const hitX = getHitX();
+  const laneY = getLaneY();
+  const scrollSpeed = SCROLL_SPEED_BASE * (currentSong ? (currentSong.bpm / 140) : 1);
+
+  // Clear
+  ctx.clearRect(0, 0, w, h);
+
+  // Background gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+  bgGrad.addColorStop(0, '#050810');
+  bgGrad.addColorStop(1, '#0a0f1e');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < w; x += 60) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+  }
+
+  // Lane
+  const laneH = NOTE_RADIUS * 2.8;
+  const laneTop = laneY - laneH / 2;
+  ctx.fillStyle = 'rgba(255,255,255,0.03)';
+  ctx.fillRect(0, laneTop, w, laneH);
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, laneTop); ctx.lineTo(w, laneTop); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, laneTop + laneH); ctx.lineTo(w, laneTop + laneH); ctx.stroke();
+
+  // Hit zone (outer ring)
+  ctx.save();
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = hitFlash.don > 0.1
+    ? `rgba(255,58,58,${hitFlash.don})`
+    : hitFlash.ka > 0.1
+    ? `rgba(58,159,255,${hitFlash.ka})`
+    : 'rgba(255,255,255,0.3)';
+
+  // Outer ring
+  ctx.beginPath();
+  ctx.arc(hitX, laneY, HIT_ZONE_RADIUS, 0, Math.PI * 2);
+  ctx.strokeStyle = hitFlash.don > 0.1
+    ? `rgba(255,58,58,${0.4 + hitFlash.don * 0.6})`
+    : hitFlash.ka > 0.1
+    ? `rgba(58,159,255,${0.4 + hitFlash.ka * 0.6})`
+    : 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Inner ring
+  ctx.beginPath();
+  ctx.arc(hitX, laneY, HIT_ZONE_RADIUS - 8, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.restore();
+
+  // Vertical line at hit zone
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(hitX, 0); ctx.lineTo(hitX, h); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Notes
+  notes.forEach(note => {
+    if (note.judged) return;
+    const noteX = hitX + (note.time - gameTime) * scrollSpeed;
+    if (noteX < -NOTE_RADIUS * 2 || noteX > w + NOTE_RADIUS * 2) return;
+
+    const isDon = note.type === 'don';
+    const baseColor = isDon ? '#ff3a3a' : '#3a9fff';
+    const glowColor = isDon ? 'rgba(255,58,58,0.7)' : 'rgba(58,159,255,0.7)';
+
+    ctx.save();
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = glowColor;
+
+    // Outer circle
+    const grad = ctx.createRadialGradient(noteX, laneY, 0, noteX, laneY, NOTE_RADIUS);
+    grad.addColorStop(0, isDon ? '#ff8080' : '#80c8ff');
+    grad.addColorStop(0.5, baseColor);
+    grad.addColorStop(1, isDon ? '#8b0000' : '#00448b');
+    ctx.beginPath();
+    ctx.arc(noteX, laneY, NOTE_RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Rim
+    ctx.beginPath();
+    ctx.arc(noteX, laneY, NOTE_RADIUS, 0, Math.PI * 2);
+    ctx.strokeStyle = isDon ? '#ff6060' : '#60b8ff';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Inner mark
+    ctx.beginPath();
+    ctx.arc(noteX, laneY, NOTE_RADIUS * 0.45, 0, Math.PI * 2);
+    ctx.fillStyle = isDon ? 'rgba(255,200,200,0.5)' : 'rgba(200,220,255,0.5)';
+    ctx.fill();
+
+    ctx.restore();
+  });
+
+  // Judge effects
+  judgeEffects = judgeEffects.filter(e => e.alpha > 0.01);
+  judgeEffects.forEach(e => {
+    ctx.save();
+    ctx.globalAlpha = e.alpha;
+    ctx.font = `bold ${Math.round(22 + (1 - e.alpha) * 8)}px 'Orbitron', monospace`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = e.color;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = e.color;
+    ctx.fillText(e.label, hitX, laneY - HIT_ZONE_RADIUS - 20 - (1 - e.alpha) * 30);
+    ctx.restore();
+    e.alpha -= dt * 3.5;
+  });
+
+  // Decay flash
+  hitFlash.don = Math.max(0, hitFlash.don - dt * 8);
+  hitFlash.ka = Math.max(0, hitFlash.ka - dt * 8);
+}
+
+// ---- Game Loop ----
+function gameLoop(timestamp) {
+  if (gameState !== 'playing') return;
+
+  const dt = Math.min((timestamp - lastRafTime) / 1000, 0.05);
+  lastRafTime = timestamp;
+
+  // Update game time using performance.now() for accuracy
+  gameTime = (performance.now() - songStartTime) / 1000;
+
+  // Check song end
+  if (gameTime >= songDuration + 1.5) {
+    endGame();
+    return;
+  }
+
+  // Auto-miss notes that passed
+  notes.forEach(note => {
+    if (!note.judged && gameTime - note.time > JUDGMENT.MISS.ms / 1000) {
+      note.judged = true;
+      countMiss++;
+      combo = 0;
+      judgeEffects.push({
+        label: 'MISS',
+        color: JUDGMENT.MISS.color,
+        alpha: 1.0,
+      });
+      updateHUD();
+    }
+  });
+
+  // Update progress
+  const progress = Math.min(100, (gameTime / songDuration) * 100);
+  progressBar.style.width = progress + '%';
+  hudProgress.textContent = Math.floor(progress) + '%';
+
+  // Draw
+  drawFrame(dt);
+
+  rafId = requestAnimationFrame(gameLoop);
+}
+
+// ---- Input Handling ----
+function handleInput(type) {
+  if (gameState !== 'playing') return;
+  if (!audioCtx) return;
+
+  // Play SE
+  if (type === 'don') {
+    playSE(donBuffer);
+    hitFlash.don = 1.0;
+  } else {
+    playSE(kaBuffer);
+    hitFlash.ka = 1.0;
+  }
+
+  // Find closest unjudged note
+  let bestNote = null;
+  let bestDiff = Infinity;
+
+  notes.forEach(note => {
+    if (note.judged) return;
+    if (note.type !== type) return;
+    const diff = Math.abs(gameTime - note.time) * 1000; // ms
+    if (diff < JUDGMENT.MISS.ms && diff < bestDiff) {
+      bestDiff = diff;
+      bestNote = note;
+    }
+  });
+
+  if (!bestNote) return;
+
+  bestNote.judged = true;
+
+  let jResult;
+  if (bestDiff <= JUDGMENT.PERFECT.ms) {
+    jResult = JUDGMENT.PERFECT;
+    countPerfect++;
+    score += JUDGMENT.PERFECT.score * (1 + combo * 0.01);
+  } else if (bestDiff <= JUDGMENT.GOOD.ms) {
+    jResult = JUDGMENT.GOOD;
+    countGood++;
+    score += JUDGMENT.GOOD.score * (1 + combo * 0.005);
+  } else {
+    jResult = JUDGMENT.MISS;
+    countMiss++;
+    combo = 0;
+    updateHUD();
+    judgeEffects.push({ label: jResult.label, color: jResult.color, alpha: 1.0 });
+    return;
+  }
+
+  combo++;
+  maxCombo = Math.max(maxCombo, combo);
+  judgeEffects.push({ label: jResult.label, color: jResult.color, alpha: 1.0 });
+  updateHUD();
+}
+
+function updateHUD() {
+  hudScore.textContent = Math.floor(score).toLocaleString();
+  hudCombo.textContent = combo;
+}
+
+// ---- Game Start/End ----
+async function startGame() {
+  if (!audioCtx) initAudio();
+  if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+  showScreen('play');
+  gameState = 'playing';
+
+  // Reset state
+  score = 0; combo = 0; maxCombo = 0;
+  countPerfect = 0; countGood = 0; countMiss = 0;
+  judgeEffects = [];
+  hitFlash = { don: 0, ka: 0 };
+  totalPausedTime = 0;
+
+  // Load chart
+  try {
+    const chartData = await loadChart(currentSong.id, currentDiff);
+    notes = prepareNotes(chartData);
+    songDuration = chartData.duration || (notes.length > 0 ? notes[notes.length - 1].time + 2 : 60);
+  } catch (e) {
+    console.error('Chart load error:', e);
+    return;
+  }
+
+  // HUD
+  hudDiff.textContent = currentDiff.toUpperCase();
+  updateHUD();
+  resizeCanvas();
+
+  // Generate audio if needed
+  if (!donBuffer) donBuffer = makeDonBuffer();
+  if (!kaBuffer) kaBuffer = makeKaBuffer();
+
+  // BGM
+  if (bgmSource) { try { bgmSource.stop(); } catch(e){} }
+  if (!bgmBuffer) bgmBuffer = makeBGMBuffer(currentSong.bpm || 140);
+
+  // Start timing - use performance.now() for game time
+  // リードタイム: ノーツが右端から判定円まで移動する時間
+  // scrollSpeed=500px/sec, hitX=22%*900=198px, canvasWidth=900px, noteStartX=900px
+  // リードタイム = (900 - 198) / 500 = 約1.4秒
+  const canvasW = canvas.width || 900;
+  const hitX = canvasW * HIT_X_RATIO;
+  const leadTime = (canvasW - hitX) / SCROLL_SPEED_BASE + 0.3; // 右端から判定円まで + 余裕
+  const now = performance.now();
+  songStartTime = now + leadTime * 1000; // msで保持。gameTime=0になる時刻
+  gameTime = -leadTime;
+  lastRafTime = now;
+
+  // BGMはリードタイム後に開始
+  const audioStart = audioCtx.currentTime + leadTime;
+  bgmSource = playBuffer(bgmBuffer, true, audioStart);
+
+  rafId = requestAnimationFrame(gameLoop);
+}
+
+function endGame() {
+  gameState = 'result';
+  if (rafId) cancelAnimationFrame(rafId);
+  if (bgmSource) { try { bgmSource.stop(); } catch(e){} bgmSource = null; }
+
+  const total = countPerfect + countGood + countMiss;
+  const acc = total > 0 ? Math.round((countPerfect + countGood * 0.5) / total * 100) : 0;
+
+  // Rank
+  let rank = 'D';
+  if (acc >= 95 && countMiss === 0) rank = 'S';
+  else if (acc >= 90) rank = 'A';
+  else if (acc >= 80) rank = 'B';
+  else if (acc >= 70) rank = 'C';
+
+  const rankColors = { S: '#ffd700', A: '#ff8c00', B: '#4ade80', C: '#60a5fa', D: '#6b7280' };
+
+  document.getElementById('result-title').textContent = countMiss < total * 0.3 ? 'CLEAR!' : 'FAILED';
+  document.getElementById('result-title').className = 'result-title ' + (countMiss < total * 0.3 ? 'clear' : 'failed');
+  document.getElementById('result-rank').textContent = rank;
+  document.getElementById('result-rank').style.color = rankColors[rank] || '#fff';
+  document.getElementById('result-score').textContent = Math.floor(score).toLocaleString();
+  document.getElementById('result-perfect').textContent = countPerfect;
+  document.getElementById('result-good').textContent = countGood;
+  document.getElementById('result-miss').textContent = countMiss;
+  document.getElementById('result-combo').textContent = maxCombo;
+  document.getElementById('result-acc').textContent = acc + '%';
+  document.getElementById('result-diff').textContent = currentDiff.toUpperCase();
+
+  showScreen('result');
+}
+
+function pauseGame() {
+  if (gameState !== 'playing') return;
+  gameState = 'paused';
+  pauseStartTime = performance.now();
+  if (bgmSource) { try { bgmSource.stop(); } catch(e){} bgmSource = null; }
+  if (rafId) cancelAnimationFrame(rafId);
+  pauseOverlay.classList.add('visible');
+}
+
+function resumeGame() {
+  if (gameState !== 'paused') return;
+  gameState = 'playing';
+  pauseOverlay.classList.remove('visible');
+
+  const pausedDur = (performance.now() - pauseStartTime) / 1000; // seconds
+  // songStartTimeをpausedDur分進めることでゲーム時間を調整
+  songStartTime += pausedDur * 1000; // msで保持しているのでmsで加算
+
+  // Restart BGM from correct position
+  const currentGameTime = (performance.now() - songStartTime) / 1000;
+  const loopDur = bgmBuffer ? bgmBuffer.duration : 0;
+  const offset = loopDur > 0 ? ((currentGameTime % loopDur) + loopDur) % loopDur : 0;
+
+  bgmSource = audioCtx.createBufferSource();
+  bgmSource.buffer = bgmBuffer;
+  bgmSource.loop = true;
+  const gain = audioCtx.createGain();
+  gain.gain.value = 0.7;
+  bgmSource.connect(gain);
+  gain.connect(audioCtx.destination);
+  bgmSource.start(0, offset);
+
+  lastRafTime = performance.now();
+  rafId = requestAnimationFrame(gameLoop);
+}
+
+function goToTitle() {
+  gameState = 'title';
+  if (rafId) cancelAnimationFrame(rafId);
+  if (bgmSource) { try { bgmSource.stop(); } catch(e){} bgmSource = null; }
+  pauseOverlay.classList.remove('visible');
+  showScreen('title');
+}
+
+// ---- Keyboard Input ----
+document.addEventListener('keydown', e => {
+  if (e.repeat) return;
+  const key = e.key.toLowerCase();
+
+  if (gameState === 'title') {
+    if (key === 'enter') startGame();
+    return;
+  }
+
+  if (gameState === 'result') {
+    if (key === 'enter') startGame();
+    return;
+  }
+
+  if (gameState === 'paused') {
+    if (key === 'escape') resumeGame();
+    return;
+  }
+
+  if (gameState === 'playing') {
+    if (key === 'escape') { pauseGame(); return; }
+    if (key === 'f' || key === 'j') handleInput('don');
+    if (key === 'd' || key === 'k') handleInput('ka');
+  }
+});
+
+// ---- Touch/Click Input ----
+function addTouchInput(id, type) {
+  const btn = document.getElementById(id);
+  btn.addEventListener('touchstart', e => { e.preventDefault(); handleInput(type); }, { passive: false });
+  btn.addEventListener('mousedown', e => { e.preventDefault(); handleInput(type); });
+}
+addTouchInput('btn-don-l', 'don');
+addTouchInput('btn-don-r', 'don');
+addTouchInput('btn-ka-l', 'ka');
+addTouchInput('btn-ka-r', 'ka');
+
+// ---- Difficulty Buttons ----
+document.querySelectorAll('.diff-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentDiff = btn.dataset.diff;
+  });
+});
+
+// ---- Start Button ----
+document.getElementById('start-btn').addEventListener('click', () => {
+  startGame();
+});
+
+// ---- Result Buttons ----
+document.getElementById('retry-btn').addEventListener('click', () => startGame());
+document.getElementById('title-btn').addEventListener('click', () => goToTitle());
+
+// ---- Pause Buttons ----
+document.getElementById('resume-btn').addEventListener('click', () => resumeGame());
+document.getElementById('pause-title-btn').addEventListener('click', () => goToTitle());
+
+// ---- Window Resize ----
+window.addEventListener('resize', () => {
+  if (gameState === 'playing' || gameState === 'paused') resizeCanvas();
+});
+
+// ---- Initialization ----
+async function init() {
+  try {
+    const songs = await loadSongs();
+    currentSong = songs[0];
+    document.getElementById('title-song-name').textContent = currentSong.title || 'NEON PULSE';
+    document.getElementById('title-song-meta').textContent =
+      `BPM ${currentSong.bpm || 140} | ${currentSong.artist || 'Original'}`;
+  } catch (e) {
+    console.warn('songs.json load failed, using defaults:', e);
+    currentSong = { id: 'original_01', title: 'NEON PULSE', bpm: 140, artist: 'Original' };
+  }
+
+  resizeCanvas();
+  showScreen('title');
+}
+
+init();
+</script>
+</body>
+</html>

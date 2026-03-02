@@ -1,0 +1,263 @@
+{
+  "bpm": 140,
+  "difficulty": "easy",
+  "notes": [
+    {
+      "time": 0.0,
+      "type": "don"
+    },
+    {
+      "time": 0.4286,
+      "type": "ka"
+    },
+    {
+      "time": 0.8571,
+      "type": "don"
+    },
+    {
+      "time": 1.2857,
+      "type": "ka"
+    },
+    {
+      "time": 1.7143,
+      "type": "don"
+    },
+    {
+      "time": 2.1429,
+      "type": "ka"
+    },
+    {
+      "time": 2.5714,
+      "type": "don"
+    },
+    {
+      "time": 3.0,
+      "type": "ka"
+    },
+    {
+      "time": 3.4286,
+      "type": "don"
+    },
+    {
+      "time": 3.8571,
+      "type": "ka"
+    },
+    {
+      "time": 4.2857,
+      "type": "don"
+    },
+    {
+      "time": 4.7143,
+      "type": "ka"
+    },
+    {
+      "time": 5.1429,
+      "type": "don"
+    },
+    {
+      "time": 5.5714,
+      "type": "ka"
+    },
+    {
+      "time": 6.0,
+      "type": "don"
+    },
+    {
+      "time": 6.4286,
+      "type": "ka"
+    },
+    {
+      "time": 6.8571,
+      "type": "don"
+    },
+    {
+      "time": 7.2857,
+      "type": "ka"
+    },
+    {
+      "time": 7.7143,
+      "type": "don"
+    },
+    {
+      "time": 8.1429,
+      "type": "ka"
+    },
+    {
+      "time": 8.5714,
+      "type": "don"
+    },
+    {
+      "time": 9.0,
+      "type": "ka"
+    },
+    {
+      "time": 9.4286,
+      "type": "don"
+    },
+    {
+      "time": 9.8571,
+      "type": "ka"
+    },
+    {
+      "time": 10.2857,
+      "type": "don"
+    },
+    {
+      "time": 10.7143,
+      "type": "ka"
+    },
+    {
+      "time": 11.1429,
+      "type": "don"
+    },
+    {
+      "time": 11.5714,
+      "type": "ka"
+    },
+    {
+      "time": 12.0,
+      "type": "don"
+    },
+    {
+      "time": 12.4286,
+      "type": "ka"
+    },
+    {
+      "time": 12.8571,
+      "type": "don"
+    },
+    {
+      "time": 13.2857,
+      "type": "ka"
+    },
+    {
+      "time": 13.7143,
+      "type": "don"
+    },
+    {
+      "time": 14.1429,
+      "type": "ka"
+    },
+    {
+      "time": 14.5714,
+      "type": "don"
+    },
+    {
+      "time": 15.0,
+      "type": "ka"
+    },
+    {
+      "time": 15.4286,
+      "type": "don"
+    },
+    {
+      "time": 15.8571,
+      "type": "ka"
+    },
+    {
+      "time": 16.2857,
+      "type": "don"
+    },
+    {
+      "time": 16.7143,
+      "type": "ka"
+    },
+    {
+      "time": 17.1429,
+      "type": "don"
+    },
+    {
+      "time": 17.5714,
+      "type": "ka"
+    },
+    {
+      "time": 18.0,
+      "type": "don"
+    },
+    {
+      "time": 18.4286,
+      "type": "ka"
+    },
+    {
+      "time": 18.8571,
+      "type": "don"
+    },
+    {
+      "time": 19.2857,
+      "type": "ka"
+    },
+    {
+      "time": 19.7143,
+      "type": "don"
+    },
+    {
+      "time": 20.1429,
+      "type": "ka"
+    },
+    {
+      "time": 20.5714,
+      "type": "don"
+    },
+    {
+      "time": 21.0,
+      "type": "ka"
+    },
+    {
+      "time": 21.4286,
+      "type": "don"
+    },
+    {
+      "time": 21.8571,
+      "type": "ka"
+    },
+    {
+      "time": 22.2857,
+      "type": "don"
+    },
+    {
+      "time": 22.7143,
+      "type": "ka"
+    },
+    {
+      "time": 23.1429,
+      "type": "don"
+    },
+    {
+      "time": 23.5714,
+      "type": "ka"
+    },
+    {
+      "time": 24.0,
+      "type": "don"
+    },
+    {
+      "time": 24.4286,
+      "type": "ka"
+    },
+    {
+      "time": 24.8571,
+      "type": "don"
+    },
+    {
+      "time": 25.2857,
+      "type": "ka"
+    },
+    {
+      "time": 25.7143,
+      "type": "don"
+    },
+    {
+      "time": 26.1429,
+      "type": "ka"
+    },
+    {
+      "time": 26.5714,
+      "type": "don"
+    },
+    {
+      "time": 27.0,
+      "type": "ka"
+    }
+  ],
+  "duration": 29.43
+}
