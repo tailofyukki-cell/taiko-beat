@@ -152,8 +152,12 @@ function vitePluginManusDebugCollector(): Plugin {
 
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
+// GitHub Pages用のbaseパス設定
+const isGitHubPages = process.env.GITHUB_PAGES === 'true';
+
 export default defineConfig({
   plugins,
+  base: isGitHubPages ? '/taiko-beat/' : '/',
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

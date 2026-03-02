@@ -33,7 +33,7 @@ export default function Home() {
 
   // songs.jsonを読み込む
   useEffect(() => {
-    fetch('/data/songs.json')
+    fetch(import.meta.env.BASE_URL + 'data/songs.json')
       .then(r => r.json())
       .then((data: Song[]) => {
         setSongs(data);
@@ -58,7 +58,7 @@ export default function Home() {
       
       // 譜面を読み込む
       const chartFile = currentSong.difficulties[diff].chart;
-      const res = await fetch(`/data/charts/${chartFile}`);
+      const res = await fetch(import.meta.env.BASE_URL + `data/charts/${chartFile}`);
       if (!res.ok) throw new Error(`Failed to load chart: ${chartFile}`);
       const chart: Chart = await res.json();
       
