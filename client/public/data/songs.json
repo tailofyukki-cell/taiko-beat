@@ -1,0 +1,25 @@
+[
+  {
+    "id": "original_01",
+    "title": "Beat Storm",
+    "artist": "Taiko Beat Original",
+    "bpm": 140,
+    "duration": 29.428571428571427,
+    "bgm_ogg": "https://d2xsxph8kpxj0f.cloudfront.net/310519663182530348/H5nAVRoKLyRvzTJVdfWePb/bgm_original_8d1bf03a.ogg",
+    "bgm_mp3": "https://d2xsxph8kpxj0f.cloudfront.net/310519663182530348/H5nAVRoKLyRvzTJVdfWePb/bgm_original_acbe27fe.mp3",
+    "difficulties": {
+      "easy": {
+        "level": 2,
+        "chart": "original_01_easy.json"
+      },
+      "normal": {
+        "level": 5,
+        "chart": "original_01_normal.json"
+      },
+      "hard": {
+        "level": 8,
+        "chart": "original_01_hard.json"
+      }
+    }
+  }
+]

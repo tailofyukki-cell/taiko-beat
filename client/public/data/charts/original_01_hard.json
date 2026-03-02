@@ -1,0 +1,969 @@
+{
+  "songId": "original_01",
+  "difficulty": "hard",
+  "level": 8,
+  "bpm": 140,
+  "offset": 1000,
+  "notes": [
+    {
+      "time": 0.0,
+      "type": "don"
+    },
+    {
+      "time": 26.8,
+      "type": "don"
+    },
+    {
+      "time": 53.6,
+      "type": "ka"
+    },
+    {
+      "time": 80.4,
+      "type": "ka"
+    },
+    {
+      "time": 107.1,
+      "type": "don"
+    },
+    {
+      "time": 133.9,
+      "type": "don"
+    },
+    {
+      "time": 160.7,
+      "type": "ka"
+    },
+    {
+      "time": 187.5,
+      "type": "ka"
+    },
+    {
+      "time": 214.3,
+      "type": "don"
+    },
+    {
+      "time": 241.1,
+      "type": "don"
+    },
+    {
+      "time": 267.9,
+      "type": "ka"
+    },
+    {
+      "time": 294.6,
+      "type": "ka"
+    },
+    {
+      "time": 321.4,
+      "type": "don"
+    },
+    {
+      "time": 348.2,
+      "type": "don"
+    },
+    {
+      "time": 375.0,
+      "type": "ka"
+    },
+    {
+      "time": 401.8,
+      "type": "ka"
+    },
+    {
+      "time": 1714.3,
+      "type": "don"
+    },
+    {
+      "time": 1928.6,
+      "type": "don"
+    },
+    {
+      "time": 2142.9,
+      "type": "ka"
+    },
+    {
+      "time": 2250.0,
+      "type": "don"
+    },
+    {
+      "time": 2357.1,
+      "type": "don"
+    },
+    {
+      "time": 2464.3,
+      "type": "ka"
+    },
+    {
+      "time": 2571.4,
+      "type": "don"
+    },
+    {
+      "time": 2785.7,
+      "type": "ka"
+    },
+    {
+      "time": 3000.0,
+      "type": "don"
+    },
+    {
+      "time": 3107.1,
+      "type": "don"
+    },
+    {
+      "time": 3214.3,
+      "type": "ka"
+    },
+    {
+      "time": 3321.4,
+      "type": "don"
+    },
+    {
+      "time": 3428.6,
+      "type": "don"
+    },
+    {
+      "time": 3455.4,
+      "type": "ka"
+    },
+    {
+      "time": 3482.1,
+      "type": "don"
+    },
+    {
+      "time": 3508.9,
+      "type": "ka"
+    },
+    {
+      "time": 3535.7,
+      "type": "don"
+    },
+    {
+      "time": 3562.5,
+      "type": "ka"
+    },
+    {
+      "time": 3589.3,
+      "type": "don"
+    },
+    {
+      "time": 3616.1,
+      "type": "ka"
+    },
+    {
+      "time": 3642.9,
+      "type": "don"
+    },
+    {
+      "time": 3669.6,
+      "type": "ka"
+    },
+    {
+      "time": 3696.4,
+      "type": "don"
+    },
+    {
+      "time": 3723.2,
+      "type": "ka"
+    },
+    {
+      "time": 3750.0,
+      "type": "don"
+    },
+    {
+      "time": 3776.8,
+      "type": "ka"
+    },
+    {
+      "time": 3803.6,
+      "type": "don"
+    },
+    {
+      "time": 3830.4,
+      "type": "ka"
+    },
+    {
+      "time": 5142.9,
+      "type": "don"
+    },
+    {
+      "time": 5250.0,
+      "type": "don"
+    },
+    {
+      "time": 5357.1,
+      "type": "ka"
+    },
+    {
+      "time": 5464.3,
+      "type": "ka"
+    },
+    {
+      "time": 5571.4,
+      "type": "don"
+    },
+    {
+      "time": 5785.7,
+      "type": "don"
+    },
+    {
+      "time": 6000.0,
+      "type": "ka"
+    },
+    {
+      "time": 6107.1,
+      "type": "don"
+    },
+    {
+      "time": 6214.3,
+      "type": "don"
+    },
+    {
+      "time": 6321.4,
+      "type": "ka"
+    },
+    {
+      "time": 6428.6,
+      "type": "don"
+    },
+    {
+      "time": 6535.7,
+      "type": "ka"
+    },
+    {
+      "time": 6642.9,
+      "type": "don"
+    },
+    {
+      "time": 6750.0,
+      "type": "don"
+    },
+    {
+      "time": 6857.1,
+      "type": "ka"
+    },
+    {
+      "time": 6883.9,
+      "type": "ka"
+    },
+    {
+      "time": 6910.7,
+      "type": "don"
+    },
+    {
+      "time": 6937.5,
+      "type": "don"
+    },
+    {
+      "time": 6964.3,
+      "type": "ka"
+    },
+    {
+      "time": 6991.1,
+      "type": "ka"
+    },
+    {
+      "time": 7017.9,
+      "type": "don"
+    },
+    {
+      "time": 7044.6,
+      "type": "don"
+    },
+    {
+      "time": 7071.4,
+      "type": "ka"
+    },
+    {
+      "time": 7098.2,
+      "type": "ka"
+    },
+    {
+      "time": 7125.0,
+      "type": "don"
+    },
+    {
+      "time": 7151.8,
+      "type": "don"
+    },
+    {
+      "time": 7178.6,
+      "type": "ka"
+    },
+    {
+      "time": 7205.4,
+      "type": "ka"
+    },
+    {
+      "time": 7232.1,
+      "type": "don"
+    },
+    {
+      "time": 7258.9,
+      "type": "don"
+    },
+    {
+      "time": 8571.4,
+      "type": "don"
+    },
+    {
+      "time": 8678.6,
+      "type": "ka"
+    },
+    {
+      "time": 8785.7,
+      "type": "don"
+    },
+    {
+      "time": 8892.9,
+      "type": "don"
+    },
+    {
+      "time": 9000.0,
+      "type": "don"
+    },
+    {
+      "time": 9107.1,
+      "type": "ka"
+    },
+    {
+      "time": 9214.3,
+      "type": "don"
+    },
+    {
+      "time": 9321.4,
+      "type": "ka"
+    },
+    {
+      "time": 9428.6,
+      "type": "don"
+    },
+    {
+      "time": 9535.7,
+      "type": "ka"
+    },
+    {
+      "time": 9642.9,
+      "type": "don"
+    },
+    {
+      "time": 9750.0,
+      "type": "don"
+    },
+    {
+      "time": 9857.1,
+      "type": "don"
+    },
+    {
+      "time": 9964.3,
+      "type": "ka"
+    },
+    {
+      "time": 10071.4,
+      "type": "don"
+    },
+    {
+      "time": 10178.6,
+      "type": "ka"
+    },
+    {
+      "time": 10285.7,
+      "type": "don"
+    },
+    {
+      "time": 10339.3,
+      "type": "don"
+    },
+    {
+      "time": 10392.9,
+      "type": "ka"
+    },
+    {
+      "time": 10446.4,
+      "type": "ka"
+    },
+    {
+      "time": 10500.0,
+      "type": "don"
+    },
+    {
+      "time": 10553.6,
+      "type": "don"
+    },
+    {
+      "time": 10607.1,
+      "type": "ka"
+    },
+    {
+      "time": 10660.7,
+      "type": "ka"
+    },
+    {
+      "time": 11142.9,
+      "type": "don"
+    },
+    {
+      "time": 11357.1,
+      "type": "ka"
+    },
+    {
+      "time": 11571.4,
+      "type": "don"
+    },
+    {
+      "time": 11678.6,
+      "type": "don"
+    },
+    {
+      "time": 11785.7,
+      "type": "ka"
+    },
+    {
+      "time": 11892.9,
+      "type": "ka"
+    },
+    {
+      "time": 12000.0,
+      "type": "don"
+    },
+    {
+      "time": 12026.8,
+      "type": "don"
+    },
+    {
+      "time": 12053.6,
+      "type": "don"
+    },
+    {
+      "time": 12080.4,
+      "type": "don"
+    },
+    {
+      "time": 12107.1,
+      "type": "don"
+    },
+    {
+      "time": 12133.9,
+      "type": "don"
+    },
+    {
+      "time": 12160.7,
+      "type": "don"
+    },
+    {
+      "time": 12187.5,
+      "type": "don"
+    },
+    {
+      "time": 12214.3,
+      "type": "don"
+    },
+    {
+      "time": 12241.1,
+      "type": "don"
+    },
+    {
+      "time": 12267.9,
+      "type": "don"
+    },
+    {
+      "time": 12294.6,
+      "type": "don"
+    },
+    {
+      "time": 12321.4,
+      "type": "don"
+    },
+    {
+      "time": 12348.2,
+      "type": "don"
+    },
+    {
+      "time": 12375.0,
+      "type": "don"
+    },
+    {
+      "time": 12401.8,
+      "type": "don"
+    },
+    {
+      "time": 13714.3,
+      "type": "don"
+    },
+    {
+      "time": 13741.1,
+      "type": "don"
+    },
+    {
+      "time": 13767.9,
+      "type": "ka"
+    },
+    {
+      "time": 13794.6,
+      "type": "ka"
+    },
+    {
+      "time": 13821.4,
+      "type": "don"
+    },
+    {
+      "time": 13848.2,
+      "type": "don"
+    },
+    {
+      "time": 13875.0,
+      "type": "ka"
+    },
+    {
+      "time": 13901.8,
+      "type": "ka"
+    },
+    {
+      "time": 13928.6,
+      "type": "don"
+    },
+    {
+      "time": 13955.4,
+      "type": "don"
+    },
+    {
+      "time": 13982.1,
+      "type": "ka"
+    },
+    {
+      "time": 14008.9,
+      "type": "ka"
+    },
+    {
+      "time": 14035.7,
+      "type": "don"
+    },
+    {
+      "time": 14062.5,
+      "type": "don"
+    },
+    {
+      "time": 14089.3,
+      "type": "ka"
+    },
+    {
+      "time": 14116.1,
+      "type": "ka"
+    },
+    {
+      "time": 15428.6,
+      "type": "don"
+    },
+    {
+      "time": 15642.9,
+      "type": "don"
+    },
+    {
+      "time": 15857.1,
+      "type": "ka"
+    },
+    {
+      "time": 15964.3,
+      "type": "don"
+    },
+    {
+      "time": 16071.4,
+      "type": "don"
+    },
+    {
+      "time": 16178.6,
+      "type": "ka"
+    },
+    {
+      "time": 16285.7,
+      "type": "don"
+    },
+    {
+      "time": 16500.0,
+      "type": "ka"
+    },
+    {
+      "time": 16714.3,
+      "type": "don"
+    },
+    {
+      "time": 16821.4,
+      "type": "don"
+    },
+    {
+      "time": 16928.6,
+      "type": "ka"
+    },
+    {
+      "time": 17035.7,
+      "type": "don"
+    },
+    {
+      "time": 17142.9,
+      "type": "don"
+    },
+    {
+      "time": 17169.6,
+      "type": "ka"
+    },
+    {
+      "time": 17196.4,
+      "type": "don"
+    },
+    {
+      "time": 17223.2,
+      "type": "ka"
+    },
+    {
+      "time": 17250.0,
+      "type": "don"
+    },
+    {
+      "time": 17276.8,
+      "type": "ka"
+    },
+    {
+      "time": 17303.6,
+      "type": "don"
+    },
+    {
+      "time": 17330.4,
+      "type": "ka"
+    },
+    {
+      "time": 17357.1,
+      "type": "don"
+    },
+    {
+      "time": 17383.9,
+      "type": "ka"
+    },
+    {
+      "time": 17410.7,
+      "type": "don"
+    },
+    {
+      "time": 17437.5,
+      "type": "ka"
+    },
+    {
+      "time": 17464.3,
+      "type": "don"
+    },
+    {
+      "time": 17491.1,
+      "type": "ka"
+    },
+    {
+      "time": 17517.9,
+      "type": "don"
+    },
+    {
+      "time": 17544.6,
+      "type": "ka"
+    },
+    {
+      "time": 18857.1,
+      "type": "don"
+    },
+    {
+      "time": 18964.3,
+      "type": "don"
+    },
+    {
+      "time": 19071.4,
+      "type": "ka"
+    },
+    {
+      "time": 19178.6,
+      "type": "ka"
+    },
+    {
+      "time": 19285.7,
+      "type": "don"
+    },
+    {
+      "time": 19500.0,
+      "type": "don"
+    },
+    {
+      "time": 19714.3,
+      "type": "ka"
+    },
+    {
+      "time": 19821.4,
+      "type": "don"
+    },
+    {
+      "time": 19928.6,
+      "type": "don"
+    },
+    {
+      "time": 20035.7,
+      "type": "ka"
+    },
+    {
+      "time": 20142.9,
+      "type": "don"
+    },
+    {
+      "time": 20250.0,
+      "type": "ka"
+    },
+    {
+      "time": 20357.1,
+      "type": "don"
+    },
+    {
+      "time": 20464.3,
+      "type": "don"
+    },
+    {
+      "time": 20571.4,
+      "type": "ka"
+    },
+    {
+      "time": 20598.2,
+      "type": "ka"
+    },
+    {
+      "time": 20625.0,
+      "type": "don"
+    },
+    {
+      "time": 20651.8,
+      "type": "don"
+    },
+    {
+      "time": 20678.6,
+      "type": "ka"
+    },
+    {
+      "time": 20705.4,
+      "type": "ka"
+    },
+    {
+      "time": 20732.1,
+      "type": "don"
+    },
+    {
+      "time": 20758.9,
+      "type": "don"
+    },
+    {
+      "time": 20785.7,
+      "type": "ka"
+    },
+    {
+      "time": 20812.5,
+      "type": "ka"
+    },
+    {
+      "time": 20839.3,
+      "type": "don"
+    },
+    {
+      "time": 20866.1,
+      "type": "don"
+    },
+    {
+      "time": 20892.9,
+      "type": "ka"
+    },
+    {
+      "time": 20919.6,
+      "type": "ka"
+    },
+    {
+      "time": 20946.4,
+      "type": "don"
+    },
+    {
+      "time": 20973.2,
+      "type": "don"
+    },
+    {
+      "time": 22285.7,
+      "type": "don"
+    },
+    {
+      "time": 22392.9,
+      "type": "ka"
+    },
+    {
+      "time": 22500.0,
+      "type": "don"
+    },
+    {
+      "time": 22607.1,
+      "type": "don"
+    },
+    {
+      "time": 22714.3,
+      "type": "don"
+    },
+    {
+      "time": 22821.4,
+      "type": "ka"
+    },
+    {
+      "time": 22928.6,
+      "type": "don"
+    },
+    {
+      "time": 23035.7,
+      "type": "ka"
+    },
+    {
+      "time": 23142.9,
+      "type": "don"
+    },
+    {
+      "time": 23250.0,
+      "type": "ka"
+    },
+    {
+      "time": 23357.1,
+      "type": "don"
+    },
+    {
+      "time": 23464.3,
+      "type": "don"
+    },
+    {
+      "time": 23571.4,
+      "type": "don"
+    },
+    {
+      "time": 23678.6,
+      "type": "ka"
+    },
+    {
+      "time": 23785.7,
+      "type": "don"
+    },
+    {
+      "time": 23892.9,
+      "type": "ka"
+    },
+    {
+      "time": 24000.0,
+      "type": "don"
+    },
+    {
+      "time": 24053.6,
+      "type": "don"
+    },
+    {
+      "time": 24107.1,
+      "type": "ka"
+    },
+    {
+      "time": 24160.7,
+      "type": "ka"
+    },
+    {
+      "time": 24214.3,
+      "type": "don"
+    },
+    {
+      "time": 24267.9,
+      "type": "don"
+    },
+    {
+      "time": 24321.4,
+      "type": "ka"
+    },
+    {
+      "time": 24375.0,
+      "type": "ka"
+    },
+    {
+      "time": 24857.1,
+      "type": "don"
+    },
+    {
+      "time": 25071.4,
+      "type": "ka"
+    },
+    {
+      "time": 25285.7,
+      "type": "don"
+    },
+    {
+      "time": 25392.9,
+      "type": "don"
+    },
+    {
+      "time": 25500.0,
+      "type": "ka"
+    },
+    {
+      "time": 25607.1,
+      "type": "ka"
+    },
+    {
+      "time": 25714.3,
+      "type": "don"
+    },
+    {
+      "time": 25741.1,
+      "type": "don"
+    },
+    {
+      "time": 25767.9,
+      "type": "don"
+    },
+    {
+      "time": 25794.6,
+      "type": "don"
+    },
+    {
+      "time": 25821.4,
+      "type": "don"
+    },
+    {
+      "time": 25848.2,
+      "type": "don"
+    },
+    {
+      "time": 25875.0,
+      "type": "don"
+    },
+    {
+      "time": 25901.8,
+      "type": "don"
+    },
+    {
+      "time": 25928.6,
+      "type": "don"
+    },
+    {
+      "time": 25955.4,
+      "type": "don"
+    },
+    {
+      "time": 25982.1,
+      "type": "don"
+    },
+    {
+      "time": 26008.9,
+      "type": "don"
+    },
+    {
+      "time": 26035.7,
+      "type": "don"
+    },
+    {
+      "time": 26062.5,
+      "type": "don"
+    },
+    {
+      "time": 26089.3,
+      "type": "don"
+    },
+    {
+      "time": 26116.1,
+      "type": "don"
+    }
+  ]
+}

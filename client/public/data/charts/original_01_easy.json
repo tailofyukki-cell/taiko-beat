@@ -1,0 +1,265 @@
+{
+  "songId": "original_01",
+  "difficulty": "easy",
+  "level": 2,
+  "bpm": 140,
+  "offset": 1000,
+  "notes": [
+    {
+      "time": 0.0,
+      "type": "don"
+    },
+    {
+      "time": 428.6,
+      "type": "don"
+    },
+    {
+      "time": 857.1,
+      "type": "ka"
+    },
+    {
+      "time": 1285.7,
+      "type": "don"
+    },
+    {
+      "time": 1714.3,
+      "type": "don"
+    },
+    {
+      "time": 2142.9,
+      "type": "ka"
+    },
+    {
+      "time": 2571.4,
+      "type": "don"
+    },
+    {
+      "time": 3000.0,
+      "type": "ka"
+    },
+    {
+      "time": 3428.6,
+      "type": "don"
+    },
+    {
+      "time": 3857.1,
+      "type": "don"
+    },
+    {
+      "time": 4285.7,
+      "type": "don"
+    },
+    {
+      "time": 4714.3,
+      "type": "ka"
+    },
+    {
+      "time": 5142.9,
+      "type": "ka"
+    },
+    {
+      "time": 5571.4,
+      "type": "don"
+    },
+    {
+      "time": 6000.0,
+      "type": "ka"
+    },
+    {
+      "time": 6428.6,
+      "type": "don"
+    },
+    {
+      "time": 6857.1,
+      "type": "don"
+    },
+    {
+      "time": 7285.7,
+      "type": "don"
+    },
+    {
+      "time": 7714.3,
+      "type": "ka"
+    },
+    {
+      "time": 8142.9,
+      "type": "don"
+    },
+    {
+      "time": 8571.4,
+      "type": "don"
+    },
+    {
+      "time": 9000.0,
+      "type": "ka"
+    },
+    {
+      "time": 9428.6,
+      "type": "don"
+    },
+    {
+      "time": 9857.1,
+      "type": "ka"
+    },
+    {
+      "time": 10285.7,
+      "type": "don"
+    },
+    {
+      "time": 10714.3,
+      "type": "don"
+    },
+    {
+      "time": 11142.9,
+      "type": "don"
+    },
+    {
+      "time": 11571.4,
+      "type": "ka"
+    },
+    {
+      "time": 12000.0,
+      "type": "ka"
+    },
+    {
+      "time": 12428.6,
+      "type": "don"
+    },
+    {
+      "time": 12857.1,
+      "type": "ka"
+    },
+    {
+      "time": 13285.7,
+      "type": "don"
+    },
+    {
+      "time": 13714.3,
+      "type": "don"
+    },
+    {
+      "time": 14142.9,
+      "type": "don"
+    },
+    {
+      "time": 14571.4,
+      "type": "ka"
+    },
+    {
+      "time": 15000.0,
+      "type": "don"
+    },
+    {
+      "time": 15428.6,
+      "type": "don"
+    },
+    {
+      "time": 15857.1,
+      "type": "ka"
+    },
+    {
+      "time": 16285.7,
+      "type": "don"
+    },
+    {
+      "time": 16714.3,
+      "type": "ka"
+    },
+    {
+      "time": 17142.9,
+      "type": "don"
+    },
+    {
+      "time": 17571.4,
+      "type": "don"
+    },
+    {
+      "time": 18000.0,
+      "type": "don"
+    },
+    {
+      "time": 18428.6,
+      "type": "ka"
+    },
+    {
+      "time": 18857.1,
+      "type": "ka"
+    },
+    {
+      "time": 19285.7,
+      "type": "don"
+    },
+    {
+      "time": 19714.3,
+      "type": "ka"
+    },
+    {
+      "time": 20142.9,
+      "type": "don"
+    },
+    {
+      "time": 20571.4,
+      "type": "don"
+    },
+    {
+      "time": 21000.0,
+      "type": "don"
+    },
+    {
+      "time": 21428.6,
+      "type": "ka"
+    },
+    {
+      "time": 21857.1,
+      "type": "don"
+    },
+    {
+      "time": 22285.7,
+      "type": "don"
+    },
+    {
+      "time": 22714.3,
+      "type": "ka"
+    },
+    {
+      "time": 23142.9,
+      "type": "don"
+    },
+    {
+      "time": 23571.4,
+      "type": "ka"
+    },
+    {
+      "time": 24000.0,
+      "type": "don"
+    },
+    {
+      "time": 24428.6,
+      "type": "don"
+    },
+    {
+      "time": 24857.1,
+      "type": "don"
+    },
+    {
+      "time": 25285.7,
+      "type": "ka"
+    },
+    {
+      "time": 25714.3,
+      "type": "ka"
+    },
+    {
+      "time": 26142.9,
+      "type": "don"
+    },
+    {
+      "time": 26571.4,
+      "type": "ka"
+    },
+    {
+      "time": 27000.0,
+      "type": "don"
+    }
+  ]
+}
